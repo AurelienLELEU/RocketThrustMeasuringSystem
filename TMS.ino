@@ -12,14 +12,14 @@ float timeCount = 0;
 boolean sdBeginSuccess = true;
 
 enum Pinout {
-  RCPin = 2,
-  HX711_dt = 4,
-  HX711_sck = 5,
-  LEDRedPin = 7,
-  LEDGreenPin = 8,
-  LEDBluePin = 6,
-  FusePin = 3,
-  HX711_cs = 10
+  RCPin = 2, // input pin for the RC receiver
+  HX711_dt = 4, // HX711 DT pin
+  HX711_sck = 5, // HX711 SCK pin
+  HX711_cs = 10, // HX711 CS pin
+  LEDRedPin = 7, //output pin for the Red LED
+  LEDGreenPin = 8, //output pin for the Green LED
+  LEDBluePin = 6, //output pin for the Blue LED
+  FusePin = 3, //output pin for the pyrotechnic igniter
 };
 
 HX711_ADC LoadCell(HX711_dt, HX711_sck);
@@ -130,14 +130,15 @@ void loop() {
 }
 
 void PulseTimer() {
-  CurrentTime = micros();
+  CurrentTime = micros(); // Save the current system time in microseconds to the `CurrentTime` variable
   if (CurrentTime > StartTime) {
-    Pulses = CurrentTime - StartTime;
-    StartTime = CurrentTime;
+    Pulses = CurrentTime - StartTime; // Calculate the duration of pulses
+    StartTime = CurrentTime; // Update the `StartTime` to the current time for the next pulse duration calculation
   }
 }
 
-void LEDTest() {
+
+void LEDTest() { // function that turns on all LEDs for 1.5 seconds
   digitalWrite(Pinout::LEDRedPin, HIGH);
   digitalWrite(Pinout::LEDGreenPin, HIGH);
   digitalWrite(Pinout::LEDBluePin, HIGH);
@@ -147,20 +148,20 @@ void LEDTest() {
   digitalWrite(Pinout::LEDBluePin, LOW);
 }
 
-void ClearLEDs() {
+void ClearLEDs() { // function that turns off all LEDs
   digitalWrite(Pinout::LEDRedPin, LOW);
   digitalWrite(Pinout::LEDGreenPin, LOW);
   digitalWrite(Pinout::LEDBluePin, LOW);
 }
 
-void Red() {
+void Red() { // function that turns on Red LED
   digitalWrite(Pinout::LEDRedPin, HIGH);
 }
 
-void Blue() {
-  digitalWrite(Pinout::LEDBluePin, HIGH);
+void Green() { // function that turns on Green LED
+  digitalWrite(Pinout::LEDGreenPin, HIGH);
 }
 
-void Green() {
-  digitalWrite(Pinout::LEDGreenPin, HIGH);
+void Blue() { // function that turns on Blue LED
+  digitalWrite(Pinout::LEDBluePin, HIGH);
 }
